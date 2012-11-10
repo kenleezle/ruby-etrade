@@ -1,7 +1,9 @@
 class Report
 	attr_accessor :report_items
-	FORMAT = ["csv","pretty_print"]
-
+	class Format
+		CSV = 1
+		PRETTY_PRINT = 2
+	end
 	def initialize
 		@report_items = Array.new
 	end
@@ -9,6 +11,10 @@ class Report
 		@report_items.push(item)
 	end
 	def toString(format)
+		raise "UnknownReportFormat" unless \
+			format == Format::CSV || \
+			format == Format::PRETTY_PRINT
+
 		retval = ""
 		retval += @report_items.first.class.header_line(format)+"\n"
 		@report_items.each { | ri | retval += ri.toString(format)+"\n" }

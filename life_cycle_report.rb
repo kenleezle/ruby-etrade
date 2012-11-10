@@ -1,11 +1,11 @@
 require './report'
 class LifeCycleReportItem < ReportItem
 	def LifeCycleReportItem.header_line(format)
-		if format == "pretty_print" then
+		if format == Report::Format::PRETTY_PRINT then
 			retval = ""
 			@@field_names.each { | f | retval += format_field(f) }
 			return retval
-		elsif format == "csv" then
+		elsif format == Report::Format::CSV then
 			return @@field_names.join(",")
 		end
 	end
@@ -35,11 +35,11 @@ class LifeCycleReportItem < ReportItem
 		@fields = Array.new
 	end
 	def toString(format)
-		if format == "pretty_print" then
+		if format == Report::Format::PRETTY_PRINT then
 			retval = ""
 			fields.each { | f | retval += LifeCycleReportItem.format_field(f) }
 			return retval
-		elsif format == "csv" then
+		elsif format == Report::Format::CSV then
 			return fields.join(",")
 		end
 	end

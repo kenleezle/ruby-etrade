@@ -10,6 +10,8 @@ tickers.each { | t |
 	item.leverage = 3.5
 	r.addReportItem(item)
 }
-puts r.toString("csv")
+puts r.toString(Report::Format::CSV)
 puts "******************"
-puts r.toString("pretty_print")
+puts r.toString(Report::Format::PRETTY_PRINT)
+puts "******************"
+puts r.toString("asldkjf")
