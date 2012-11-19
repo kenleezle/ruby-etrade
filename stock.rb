@@ -19,14 +19,16 @@ class Stock
 		return "STOCK " + ticker + " Price: " + price.to_s + " Annual Dividend: " + ly_dividend.to_s
 	end
 	def Stock.find_by_ticker(t)
-		consumer = OAuth::Consumer.new(CONSUMER_TOKEN[:token],CONSUMER_TOKEN[:secret],{:site => "https://etwssandbox.etrade.com", :http_method => :get})
+		consumer = OAuth::Consumer.new(CONSUMER_TOKEN[:token],CONSUMER_TOKEN[:secret],{:site => "https://etws.etrade.com", :http_method => :get})
 		access_token = OAuth::Token.new(ACCESS_TOKEN[:token],ACCESS_TOKEN[:secret])
 
-		response = consumer.request(:get, "/market/sandbox/rest/quote/#{t}", access_token, {:detailFlag => "INTRADAY"})
+		response = consumer.request(:get, "/market/rest/quote/#{t}", access_token, {:detailFlag => "INTRADAY"})
+		sleep 0.25
 		doc = REXML::Document.new response.body
 		price = doc.elements["QuoteResponse/QuoteData/all/ask"].text.to_f
 
-		response = consumer.request(:get, "/market/sandbox/rest/quote/#{t}", access_token, {:detailFlag => "WEEK_52"})
+		response = consumer.request(:get, "/market/rest/quote/#{t}", access_token, {:detailFlag => "WEEK_52"})
+		sleep 0.25
 		doc = REXML::Document.new response.body
 		puts doc
 		ly_dividend = doc.elements["QuoteResponse/QuoteData/all/annualDividend"].text.to_f
@@ -37,5 +39,3 @@ class Stock
 		return OptionExpireDate.find_all_by_ticker(ticker)
 	end
 end
-
-puts Stock.find_by_ticker("ASDFAS23")
