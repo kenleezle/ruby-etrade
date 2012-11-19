@@ -16,8 +16,10 @@ class Report
 			format == Format::PRETTY_PRINT
 
 		retval = ""
-		retval += @report_items.first.class.header_line(format)+"\n"
-		@report_items.each { | ri | retval += ri.toString(format)+"\n" }
+		if @report_items.length > 0 then
+			retval += @report_items.first.class.header_line(format)+"\n"
+			@report_items.each { | ri | retval += ri.toString(format)+"\n" }
+		end
 		return retval
 	end
 end
