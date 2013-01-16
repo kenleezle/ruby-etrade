@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'oauth'
-require_relative 'consumer_token'
+require 'consumer_token'
 include OAuth::Helper
 
 consumer = OAuth::Consumer.new(CONSUMER_TOKEN[:token],CONSUMER_TOKEN[:secret],{:site => "https://etws.etrade.com", :http_method => :get})
