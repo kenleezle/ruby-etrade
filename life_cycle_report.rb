@@ -76,10 +76,11 @@ class LifeCycleInvesting
 				#skip expire date unless its longer than a year out
 				option_chain = OptionChain.find_by_ticker_and_option_expire_date(ticker,oed)
 				option_chain.options.each { | option |
-					puts "option: #{option}"
 					option.update_price
 					stock = option.stock
-					puts "stock: #{stock}"
+          leverage = stock.price/option.strike_price
+          next unless leverage >= 1.5
+
 					# Now we have all the information we need to add an item to the report
 					report_item = LifeCycleReportItem.new
 					report_item.ticker = ticker

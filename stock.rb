@@ -25,7 +25,7 @@ class Stock
 		response = consumer.request(:get, "/market/rest/quote/#{t}", access_token, {:detailFlag => "INTRADAY"})
 		sleep 0.25
 		doc = REXML::Document.new response.body
-		price = doc.elements["QuoteResponse/QuoteData/all/ask"].text.to_f
+		price = doc.elements["QuoteResponse/QuoteData/all/lastTrade"].text.to_f
 
 		response = consumer.request(:get, "/market/rest/quote/#{t}", access_token, {:detailFlag => "WEEK_52"})
 		sleep 0.25
